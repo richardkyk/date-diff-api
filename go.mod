@@ -1,3 +1,3 @@
 module github.com/richardkyk/date-diff-api
 
-go 1.24.2
+go 1.24
