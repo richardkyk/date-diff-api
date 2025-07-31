@@ -4,14 +4,14 @@ FROM golang:1.24-alpine AS build
 WORKDIR /app
 
 # Copy go.mod and go.sum to cache dependencies
-COPY go.mod ./
+COPY ../../go.mod ./
 RUN go mod download
 
 # Copy the source code
-COPY . .
+COPY ../../ ./
 
 # Build the binary (adjust main.go if needed)
-RUN go build -o /date-diff-api
+RUN go build -o /date-diff-api ./cmd/http
 
 # Use a minimal image to run the binary
 FROM alpine:latest
