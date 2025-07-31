@@ -37,7 +37,22 @@ func ParseInput(startStr, endStr, unitsStr string) (Input, error) {
 		end = endParsed
 	}
 
-	units := strings.ToLower(unitsStr)
+	// Validate units flag
+	validUnits := map[string]bool{
+		"days":   true,
+		"weeks":  true,
+		"months": true,
+		"years":  true,
+	}
+	var units string
+	if unitsStr == "" {
+		units = "years"
+	} else {
+		units = strings.ToLower(unitsStr)
+	}
+	if !validUnits[units] {
+		return Input{}, fmt.Errorf("invalid units '%s'. Must be one of: days, weeks, months, years\n", unitsStr)
+	}
 
 	return Input{
 		Start: start,

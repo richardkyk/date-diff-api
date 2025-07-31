@@ -29,19 +29,6 @@ func main() {
 
 	start := args[0]
 
-	// Validate units flag
-	validUnits := map[string]bool{
-		"days":   true,
-		"weeks":  true,
-		"months": true,
-		"years":  true,
-	}
-
-	if !validUnits[*unitsFlag] {
-		fmt.Printf("Error: invalid units '%s'. Must be one of: days, weeks, months, years\n", *unitsFlag)
-		os.Exit(1)
-	}
-
 	input, err := datediff.ParseInput(start, *endFlag, *unitsFlag)
 	if err != nil {
 		fmt.Println("Error:", err)

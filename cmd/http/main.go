@@ -4,7 +4,6 @@ import (
 	"log"
 	"net/http"
 	"strconv"
-	"time"
 
 	"date-diff-api/internal/datediff"
 )
@@ -13,33 +12,15 @@ func main() {
 	http.HandleFunc("/", func(w http.ResponseWriter, req *http.Request) {
 		start := req.URL.Query().Get("start")
 		end := req.URL.Query().Get("end")
-		unit := req.URL.Query().Get("unit")
+		units := req.URL.Query().Get("units")
 
-		if start == "" {
-			http.Error(w, "Missing start date", http.StatusBadRequest)
-			return
-		}
-
-		// Parse startTime
-		startTime, err := time.Parse("2006-01-02", start)
+		input, err := datediff.ParseInput(start, end, units)
 		if err != nil {
-			http.Error(w, "Invalid date format, use YYYY-MM-DD", http.StatusBadRequest)
+			http.Error(w, err.Error(), http.StatusBadRequest)
 			return
 		}
 
-		// Parse endTime or default to today
-		var endTime time.Time
-		if end == "" {
-			endTime = time.Now()
-		} else {
-			endTime, err = time.Parse("2006-01-02", end)
-			if err != nil {
-				http.Error(w, "Invalid end date format, use YYYY-MM-DD", http.StatusBadRequest)
-				return
-			}
-		}
-
-		diff := datediff.CalculateDateDiff(startTime, endTime, unit)
+		diff := datediff.CalculateDateDiff(input)
 
 		w.Header().Set("Content-Type", "text/plain; charset=utf-8")
 		if _, err := w.Write([]byte(strconv.Itoa(diff))); err != nil {
