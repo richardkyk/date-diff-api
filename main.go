@@ -32,9 +32,6 @@ func main() {
 		start := req.URL.Query().Get("start")
 		end := req.URL.Query().Get("end")
 		unit := req.URL.Query().Get("unit")
-		country := req.Header.Get("CF-IPCountry")
-
-		log.Println("country:", country)
 
 		if start == "" {
 			http.Error(w, "Missing start date", http.StatusBadRequest)
