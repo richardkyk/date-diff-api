@@ -30,7 +30,7 @@ func handler(ctx context.Context, request events.APIGatewayProxyRequest) (events
 		log.Printf("Failed to parse input: %v", err)
 		return events.APIGatewayProxyResponse{
 			StatusCode: 400,
-			Body:       "Invalid input parameters",
+			Body:       err.Error(),
 		}, nil
 	}
 
