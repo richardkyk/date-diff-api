@@ -9,7 +9,7 @@ terraform {
 }
 
 locals {
-  image_tag = filesha256("../cmd/lambda/Dockerfile")
+  image_tag = "v1"
 }
 
 # Create ECR repository to hold your Docker image
@@ -22,7 +22,7 @@ resource "null_resource" "docker_build_and_push" {
   depends_on = [aws_ecr_repository.lambda_repo]
 
   triggers = {
-    dockerfile_hash = local.image_tag
+    image_tag = local.image_tag
   }
 
   provisioner "local-exec" {
