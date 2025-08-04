@@ -22,6 +22,14 @@ func main() {
 
 		diff := datediff.CalculateDateDiff(input)
 
+		log.Printf(
+			"The difference between %s and %s is %.1d %s.\n",
+			input.Start.Format("Jan 2, 2006"),
+			input.End.Format("Jan 2, 2006"),
+			diff,
+			input.Units,
+		)
+
 		w.Header().Set("Content-Type", "text/plain; charset=utf-8")
 		if _, err := w.Write([]byte(strconv.Itoa(diff))); err != nil {
 			log.Println("Error writing response:", err)

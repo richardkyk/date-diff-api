@@ -36,6 +36,14 @@ func handler(ctx context.Context, request events.APIGatewayProxyRequest) (events
 
 	diff := datediff.CalculateDateDiff(input)
 
+	log.Printf(
+		"The difference between %s and %s is %.1d %s.\n",
+		input.Start.Format("Jan 2, 2006"),
+		input.End.Format("Jan 2, 2006"),
+		diff,
+		input.Units,
+	)
+
 	return events.APIGatewayProxyResponse{
 		StatusCode:      200,
 		Headers:         map[string]string{"Content-Type": "text/plain; charset=utf-8"},
