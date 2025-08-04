@@ -9,7 +9,7 @@ terraform {
 }
 
 locals {
-  image_tag = "v1"
+  image_tag = "v2"
 }
 
 # Create ECR repository to hold your Docker image
